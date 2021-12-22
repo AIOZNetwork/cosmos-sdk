@@ -55,11 +55,11 @@ $ %s query %s grants cosmos1skjw.. cosmos1skjwj.. %s
 			}
 			queryClient := authz.NewQueryClient(clientCtx)
 
-			granter, err := sdk.AccAddressFromBech32(args[0])
+			granter, err := sdk.AccAddressFromString(args[0])
 			if err != nil {
 				return err
 			}
-			grantee, err := sdk.AccAddressFromBech32(args[1])
+			grantee, err := sdk.AccAddressFromString(args[1])
 			if err != nil {
 				return err
 			}

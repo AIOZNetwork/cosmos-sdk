@@ -72,7 +72,7 @@ func newPostDelegationsHandlerFn(clientCtx client.Context) http.HandlerFunc {
 			return
 		}
 
-		fromAddr, err := sdk.AccAddressFromBech32(req.BaseReq.From)
+		fromAddr, err := sdk.AccAddressFromString(req.BaseReq.From)
 		if rest.CheckBadRequestError(w, err) {
 			return
 		}
@@ -103,7 +103,7 @@ func newPostRedelegationsHandlerFn(clientCtx client.Context) http.HandlerFunc {
 			return
 		}
 
-		fromAddr, err := sdk.AccAddressFromBech32(req.BaseReq.From)
+		fromAddr, err := sdk.AccAddressFromString(req.BaseReq.From)
 		if rest.CheckBadRequestError(w, err) {
 			return
 		}
@@ -134,7 +134,7 @@ func newPostUnbondingDelegationsHandlerFn(clientCtx client.Context) http.Handler
 			return
 		}
 
-		fromAddr, err := sdk.AccAddressFromBech32(req.BaseReq.From)
+		fromAddr, err := sdk.AccAddressFromString(req.BaseReq.From)
 		if rest.CheckBadRequestError(w, err) {
 			return
 		}

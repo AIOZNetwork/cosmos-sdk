@@ -224,7 +224,7 @@ func readTxCommandFlags(clientCtx Context, flagSet *pflag.FlagSet) (Context, err
 		granter, _ := flagSet.GetString(flags.FlagFeeAccount)
 
 		if granter != "" {
-			granterAcc, err := sdk.AccAddressFromBech32(granter)
+			granterAcc, err := sdk.AccAddressFromString(granter)
 			if err != nil {
 				return clientCtx, err
 			}

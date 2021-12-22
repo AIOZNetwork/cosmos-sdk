@@ -25,7 +25,7 @@ func NewSendRequestHandlerFn(clientCtx client.Context) http.HandlerFunc {
 		vars := mux.Vars(r)
 		bech32Addr := vars["address"]
 
-		toAddr, err := sdk.AccAddressFromBech32(bech32Addr)
+		toAddr, err := sdk.AccAddressFromString(bech32Addr)
 		if rest.CheckBadRequestError(w, err) {
 			return
 		}
@@ -40,7 +40,7 @@ func NewSendRequestHandlerFn(clientCtx client.Context) http.HandlerFunc {
 			return
 		}
 
-		fromAddr, err := sdk.AccAddressFromBech32(req.BaseReq.From)
+		fromAddr, err := sdk.AccAddressFromString(req.BaseReq.From)
 		if rest.CheckBadRequestError(w, err) {
 			return
 		}

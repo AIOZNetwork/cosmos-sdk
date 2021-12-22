@@ -12,6 +12,8 @@ import (
 	"github.com/hashicorp/golang-lru/simplelru"
 	yaml "gopkg.in/yaml.v2"
 
+	"github.com/ethereum/go-ethereum/common"
+
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	"github.com/cosmos/cosmos-sdk/internal/conv"
 	"github.com/cosmos/cosmos-sdk/types/address"
@@ -130,8 +132,10 @@ type AccAddress []byte
 
 // AccAddressFromHex creates an AccAddress from a hex string.
 func AccAddressFromHex(address string) (addr AccAddress, err error) {
-	bz, err := addressBytesFromHexString(address)
-	return AccAddress(bz), err
+	if !common.IsHexAddress(address) {
+		return nil, errors.New("invalid address: must provide hex address")
+	}
+	return AccAddress(common.HexToAddress(address).Bytes()), nil
 }
 
 // VerifyAddressFormat verifies that the provided bytes form a valid address
@@ -173,6 +177,19 @@ func AccAddressFromBech32(address string) (addr AccAddress, err error) {
 	}
 
 	return AccAddress(bz), nil
+}
+
+func AccAddressFromString(address string) (addr AccAddress, err error) {
+	addr, err = AccAddressFromBech32(address)
+	if err == nil {
+		return addr, nil
+	}
+
+	if !common.IsHexAddress(address) {
+		return nil, errors.New("invalid address: must provide bech32 or hex address")
+	}
+
+	return AccAddress(common.HexToAddress(address).Bytes()), nil
 }
 
 // Returns boolean for whether two AccAddresses are Equal
@@ -225,7 +242,7 @@ func (aa *AccAddress) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	aa2, err := AccAddressFromBech32(s)
+	aa2, err := AccAddressFromString(s)
 	if err != nil {
 		return err
 	}
@@ -276,6 +293,10 @@ func (aa AccAddress) String() string {
 	return cacheBech32Addr(GetConfig().GetBech32AccountAddrPrefix(), aa, accAddrCache, key)
 }
 
+func (aa AccAddress) HexString() string {
+	return common.BytesToAddress(aa.Bytes()).String()
+}
+
 // Format implements the fmt.Formatter interface.
 // nolint: errcheck
 func (aa AccAddress) Format(s fmt.State, verb rune) {
@@ -299,8 +320,10 @@ type ValAddress []byte
 
 // ValAddressFromHex creates a ValAddress from a hex string.
 func ValAddressFromHex(address string) (addr ValAddress, err error) {
-	bz, err := addressBytesFromHexString(address)
-	return ValAddress(bz), err
+	if !common.IsHexAddress(address) {
+		return nil, errors.New("invalid address: must provide hex address")
+	}
+	return ValAddress(common.HexToAddress(address).Bytes()), nil
 }
 
 // ValAddressFromBech32 creates a ValAddress from a Bech32 string.
@@ -322,6 +345,19 @@ func ValAddressFromBech32(address string) (addr ValAddress, err error) {
 	}
 
 	return ValAddress(bz), nil
+}
+
+func ValAddressFromString(address string) (addr ValAddress, err error) {
+	addr, err = ValAddressFromBech32(address)
+	if err == nil {
+		return addr, err
+	}
+
+	if !common.IsHexAddress(address) {
+		return nil, errors.New("invalid address: must provide bech32 or hex address")
+	}
+
+	return ValAddress(common.HexToAddress(address).Bytes()), nil
 }
 
 // Returns boolean for whether two ValAddresses are Equal
@@ -374,7 +410,7 @@ func (va *ValAddress) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	va2, err := ValAddressFromBech32(s)
+	va2, err := ValAddressFromString(s)
 	if err != nil {
 		return err
 	}
@@ -426,6 +462,10 @@ func (va ValAddress) String() string {
 	return cacheBech32Addr(GetConfig().GetBech32ValidatorAddrPrefix(), va, valAddrCache, key)
 }
 
+func (va ValAddress) HexString() string {
+	return common.BytesToAddress(va.Bytes()).String()
+}
+
 // Format implements the fmt.Formatter interface.
 // nolint: errcheck
 func (va ValAddress) Format(s fmt.State, verb rune) {
@@ -449,8 +489,10 @@ type ConsAddress []byte
 
 // ConsAddressFromHex creates a ConsAddress from a hex string.
 func ConsAddressFromHex(address string) (addr ConsAddress, err error) {
-	bz, err := addressBytesFromHexString(address)
-	return ConsAddress(bz), err
+	if !common.IsHexAddress(address) {
+		return nil, errors.New("invalid address: must provide hex address")
+	}
+	return ConsAddress(common.HexToAddress(address).Bytes()), nil
 }
 
 // ConsAddressFromBech32 creates a ConsAddress from a Bech32 string.
@@ -472,6 +514,19 @@ func ConsAddressFromBech32(address string) (addr ConsAddress, err error) {
 	}
 
 	return ConsAddress(bz), nil
+}
+
+func ConsAddressFromString(address string) (addr ConsAddress, err error) {
+	addr, err = ConsAddressFromBech32(address)
+	if err == nil {
+		return addr, err
+	}
+
+	if !common.IsHexAddress(address) {
+		return nil, errors.New("invalid address: must provide bech32 or hex address")
+	}
+
+	return ConsAddress(common.HexToAddress(address).Bytes()), nil
 }
 
 // get ConsAddress from pubkey
@@ -529,7 +584,7 @@ func (ca *ConsAddress) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	ca2, err := ConsAddressFromBech32(s)
+	ca2, err := ConsAddressFromString(s)
 	if err != nil {
 		return err
 	}
@@ -579,6 +634,10 @@ func (ca ConsAddress) String() string {
 		return addr.(string)
 	}
 	return cacheBech32Addr(GetConfig().GetBech32ConsensusAddrPrefix(), ca, consAddrCache, key)
+}
+
+func (ca ConsAddress) HexString() string {
+	return common.BytesToAddress(ca.Bytes()).String()
 }
 
 // Bech32ifyAddressBytes returns a bech32 representation of address bytes.

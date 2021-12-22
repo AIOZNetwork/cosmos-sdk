@@ -49,12 +49,12 @@ $ %s query feegrant grant [granter] [grantee]
 			clientCtx := client.GetClientContextFromCmd(cmd)
 			queryClient := feegrant.NewQueryClient(clientCtx)
 
-			granterAddr, err := sdk.AccAddressFromBech32(args[0])
+			granterAddr, err := sdk.AccAddressFromString(args[0])
 			if err != nil {
 				return err
 			}
 
-			granteeAddr, err := sdk.AccAddressFromBech32(args[1])
+			granteeAddr, err := sdk.AccAddressFromString(args[1])
 			if err != nil {
 				return err
 			}
@@ -97,7 +97,7 @@ $ %s query feegrant grants [grantee]
 			clientCtx := client.GetClientContextFromCmd(cmd)
 			queryClient := feegrant.NewQueryClient(clientCtx)
 
-			granteeAddr, err := sdk.AccAddressFromBech32(args[0])
+			granteeAddr, err := sdk.AccAddressFromString(args[0])
 			if err != nil {
 				return err
 			}

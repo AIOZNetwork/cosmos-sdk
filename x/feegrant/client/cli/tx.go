@@ -70,7 +70,7 @@ Examples:
 				return err
 			}
 
-			grantee, err := sdk.AccAddressFromBech32(args[1])
+			grantee, err := sdk.AccAddressFromString(args[1])
 			if err != nil {
 				return err
 			}
@@ -201,7 +201,7 @@ Example:
 				return err
 			}
 
-			grantee, err := sdk.AccAddressFromBech32(args[1])
+			grantee, err := sdk.AccAddressFromString(args[1])
 			if err != nil {
 				return err
 			}

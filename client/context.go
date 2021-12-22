@@ -339,7 +339,7 @@ func GetFromFields(kr keyring.Keyring, from string, genOnly bool) (sdk.AccAddres
 	}
 
 	if genOnly {
-		addr, err := sdk.AccAddressFromBech32(from)
+		addr, err := sdk.AccAddressFromString(from)
 		if err != nil {
 			return nil, "", 0, errors.Wrap(err, "must provide a valid Bech32 address in generate-only mode")
 		}
@@ -348,7 +348,7 @@ func GetFromFields(kr keyring.Keyring, from string, genOnly bool) (sdk.AccAddres
 	}
 
 	var info keyring.Info
-	if addr, err := sdk.AccAddressFromBech32(from); err == nil {
+	if addr, err := sdk.AccAddressFromString(from); err == nil {
 		info, err = kr.KeyByAddress(addr)
 		if err != nil {
 			return nil, "", 0, err
