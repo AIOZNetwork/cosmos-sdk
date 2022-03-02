@@ -259,12 +259,12 @@ func queryDelegatorValidator(ctx sdk.Context, req abci.RequestQuery, k Keeper, l
 		return nil, sdkerrors.Wrap(sdkerrors.ErrJSONUnmarshal, err.Error())
 	}
 
-	delAddr, err := sdk.AccAddressFromBech32(params.DelegatorAddr)
+	delAddr, err := sdk.AccAddressFromString(params.DelegatorAddr)
 	if err != nil {
 		return nil, err
 	}
 
-	valAddr, err := sdk.ValAddressFromBech32(params.ValidatorAddr)
+	valAddr, err := sdk.ValAddressFromString(params.ValidatorAddr)
 	if err != nil {
 		return nil, err
 	}
@@ -290,12 +290,12 @@ func queryDelegation(ctx sdk.Context, req abci.RequestQuery, k Keeper, legacyQue
 		return nil, sdkerrors.Wrap(sdkerrors.ErrJSONUnmarshal, err.Error())
 	}
 
-	delAddr, err := sdk.AccAddressFromBech32(params.DelegatorAddr)
+	delAddr, err := sdk.AccAddressFromString(params.DelegatorAddr)
 	if err != nil {
 		return nil, err
 	}
 
-	valAddr, err := sdk.ValAddressFromBech32(params.ValidatorAddr)
+	valAddr, err := sdk.ValAddressFromString(params.ValidatorAddr)
 	if err != nil {
 		return nil, err
 	}
@@ -326,12 +326,12 @@ func queryUnbondingDelegation(ctx sdk.Context, req abci.RequestQuery, k Keeper, 
 		return nil, sdkerrors.Wrap(sdkerrors.ErrJSONUnmarshal, err.Error())
 	}
 
-	delAddr, err := sdk.AccAddressFromBech32(params.DelegatorAddr)
+	delAddr, err := sdk.AccAddressFromString(params.DelegatorAddr)
 	if err != nil {
 		return nil, err
 	}
 
-	valAddr, err := sdk.ValAddressFromBech32(params.ValidatorAddr)
+	valAddr, err := sdk.ValAddressFromString(params.ValidatorAddr)
 	if err != nil {
 		return nil, err
 	}
@@ -452,7 +452,7 @@ func DelegationToDelegationResponse(ctx sdk.Context, k Keeper, del types.Delegat
 		return types.DelegationResponse{}, types.ErrNoValidatorFound
 	}
 
-	delegatorAddress, err := sdk.AccAddressFromBech32(del.DelegatorAddress)
+	delegatorAddress, err := sdk.AccAddressFromString(del.DelegatorAddress)
 	if err != nil {
 		return types.DelegationResponse{}, err
 	}
@@ -488,16 +488,16 @@ func RedelegationsToRedelegationResponses(
 	resp := make(types.RedelegationResponses, len(redels))
 
 	for i, redel := range redels {
-		valSrcAddr, err := sdk.ValAddressFromBech32(redel.ValidatorSrcAddress)
+		valSrcAddr, err := sdk.ValAddressFromString(redel.ValidatorSrcAddress)
 		if err != nil {
 			panic(err)
 		}
-		valDstAddr, err := sdk.ValAddressFromBech32(redel.ValidatorDstAddress)
+		valDstAddr, err := sdk.ValAddressFromString(redel.ValidatorDstAddress)
 		if err != nil {
 			panic(err)
 		}
 
-		delegatorAddress, err := sdk.AccAddressFromBech32(redel.DelegatorAddress)
+		delegatorAddress, err := sdk.AccAddressFromString(redel.DelegatorAddress)
 		if err != nil {
 			panic(err)
 		}

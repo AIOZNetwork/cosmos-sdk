@@ -29,7 +29,7 @@ func (suite *TestSuite) TestGRPCQueryAuthorization() {
 			func(require *require.Assertions) {
 				req = &authz.QueryGrantsRequest{}
 			},
-			"empty address string is not allowed",
+			"invalid address: must provide bech32 or hex address",
 			func(require *require.Assertions, res *authz.QueryGrantsResponse) {},
 		},
 		{
@@ -39,7 +39,7 @@ func (suite *TestSuite) TestGRPCQueryAuthorization() {
 					Granter: addrs[0].String(),
 				}
 			},
-			"empty address string is not allowed",
+			"invalid address: must provide bech32 or hex address",
 			func(require *require.Assertions, res *authz.QueryGrantsResponse) {},
 		},
 		{

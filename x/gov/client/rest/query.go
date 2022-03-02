@@ -161,7 +161,7 @@ func queryDepositHandlerFn(clientCtx client.Context) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		strProposalID := vars[RestProposalID]
-		bechDepositorAddr := vars[RestDepositor]
+		strDepositorAddr := vars[RestDepositor]
 
 		if len(strProposalID) == 0 {
 			err := errors.New("proposalId required but not specified")
@@ -174,13 +174,13 @@ func queryDepositHandlerFn(clientCtx client.Context) http.HandlerFunc {
 			return
 		}
 
-		if len(bechDepositorAddr) == 0 {
+		if len(strDepositorAddr) == 0 {
 			err := errors.New("depositor address required but not specified")
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
 		}
 
-		depositorAddr, err := sdk.AccAddressFromBech32(bechDepositorAddr)
+		depositorAddr, err := sdk.AccAddressFromString(strDepositorAddr)
 		if rest.CheckBadRequestError(w, err) {
 			return
 		}
@@ -237,7 +237,7 @@ func queryVoteHandlerFn(clientCtx client.Context) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		strProposalID := vars[RestProposalID]
-		bechVoterAddr := vars[RestVoter]
+		strVoterAddr := vars[RestVoter]
 
 		if len(strProposalID) == 0 {
 			err := errors.New("proposalId required but not specified")
@@ -250,13 +250,13 @@ func queryVoteHandlerFn(clientCtx client.Context) http.HandlerFunc {
 			return
 		}
 
-		if len(bechVoterAddr) == 0 {
+		if len(strVoterAddr) == 0 {
 			err := errors.New("voter address required but not specified")
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
 		}
 
-		voterAddr, err := sdk.AccAddressFromBech32(bechVoterAddr)
+		voterAddr, err := sdk.AccAddressFromString(strVoterAddr)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
@@ -396,14 +396,14 @@ func queryProposalsWithParameterFn(clientCtx client.Context) http.HandlerFunc {
 		)
 
 		if v := r.URL.Query().Get(RestVoter); len(v) != 0 {
-			voterAddr, err = sdk.AccAddressFromBech32(v)
+			voterAddr, err = sdk.AccAddressFromString(v)
 			if rest.CheckBadRequestError(w, err) {
 				return
 			}
 		}
 
 		if v := r.URL.Query().Get(RestDepositor); len(v) != 0 {
-			depositorAddr, err = sdk.AccAddressFromBech32(v)
+			depositorAddr, err = sdk.AccAddressFromString(v)
 			if rest.CheckBadRequestError(w, err) {
 				return
 			}

@@ -134,12 +134,12 @@ Examples:
 					delegateLimit = &spendLimit[0]
 				}
 
-				allowed, err := bech32toValidatorAddresses(allowValidators)
+				allowed, err := stringToValidatorAddresses(allowValidators)
 				if err != nil {
 					return err
 				}
 
-				denied, err := bech32toValidatorAddresses(denyValidators)
+				denied, err := stringToValidatorAddresses(denyValidators)
 				if err != nil {
 					return err
 				}
@@ -249,10 +249,10 @@ Example:
 	return cmd
 }
 
-func bech32toValidatorAddresses(validators []string) ([]sdk.ValAddress, error) {
+func stringToValidatorAddresses(validators []string) ([]sdk.ValAddress, error) {
 	vals := make([]sdk.ValAddress, len(validators))
 	for i, validator := range validators {
-		addr, err := sdk.ValAddressFromBech32(validator)
+		addr, err := sdk.ValAddressFromString(validator)
 		if err != nil {
 			return nil, err
 		}

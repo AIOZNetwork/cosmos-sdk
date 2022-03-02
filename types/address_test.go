@@ -122,7 +122,7 @@ func (s *addressTestSuite) TestRandBech32AccAddrConsistency() {
 	}
 
 	_, err := types.AccAddressFromHex("")
-	s.Require().Equal("decoding Bech32 address failed: must provide an address", err.Error())
+	s.Require().Equal("invalid address: must provide hex address", err.Error())
 }
 
 func (s *addressTestSuite) TestValAddr() {
@@ -163,7 +163,7 @@ func (s *addressTestSuite) TestValAddr() {
 
 	// test empty string
 	_, err := types.ValAddressFromHex("")
-	s.Require().Equal("decoding Bech32 address failed: must provide an address", err.Error())
+	s.Require().Equal("invalid address: must provide hex address", err.Error())
 }
 
 func (s *addressTestSuite) TestConsAddress() {
@@ -203,7 +203,7 @@ func (s *addressTestSuite) TestConsAddress() {
 
 	// test empty string
 	_, err := types.ConsAddressFromHex("")
-	s.Require().Equal("decoding Bech32 address failed: must provide an address", err.Error())
+	s.Require().Equal("invalid address: must provide hex address", err.Error())
 }
 
 const letterBytes = "abcdefghijklmnopqrstuvwxyz"

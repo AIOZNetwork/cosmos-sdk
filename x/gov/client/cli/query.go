@@ -108,21 +108,21 @@ $ %s query gov proposals --page=2 --limit=100
 			),
 		),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			bechDepositorAddr, _ := cmd.Flags().GetString(flagDepositor)
-			bechVoterAddr, _ := cmd.Flags().GetString(flagVoter)
+			strDepositorAddr, _ := cmd.Flags().GetString(flagDepositor)
+			strVoterAddr, _ := cmd.Flags().GetString(flagVoter)
 			strProposalStatus, _ := cmd.Flags().GetString(flagStatus)
 
 			var proposalStatus types.ProposalStatus
 
-			if len(bechDepositorAddr) != 0 {
-				_, err := sdk.AccAddressFromBech32(bechDepositorAddr)
+			if len(strDepositorAddr) != 0 {
+				_, err := sdk.AccAddressFromString(strDepositorAddr)
 				if err != nil {
 					return err
 				}
 			}
 
-			if len(bechVoterAddr) != 0 {
-				_, err := sdk.AccAddressFromBech32(bechVoterAddr)
+			if len(strVoterAddr) != 0 {
+				_, err := sdk.AccAddressFromString(strVoterAddr)
 				if err != nil {
 					return err
 				}
@@ -151,8 +151,8 @@ $ %s query gov proposals --page=2 --limit=100
 				cmd.Context(),
 				&types.QueryProposalsRequest{
 					ProposalStatus: proposalStatus,
-					Voter:          bechVoterAddr,
-					Depositor:      bechDepositorAddr,
+					Voter:          strVoterAddr,
+					Depositor:      strDepositorAddr,
 					Pagination:     pageReq,
 				},
 			)

@@ -130,7 +130,7 @@ func (s *IntegrationTestSuite) TestCmdGetFeeGrant() {
 				grantee.String(),
 				fmt.Sprintf("--%s=json", tmcli.OutputFlag),
 			},
-			"decoding bech32 failed",
+			"invalid address",
 			true, nil, nil,
 		},
 		{
@@ -140,7 +140,7 @@ func (s *IntegrationTestSuite) TestCmdGetFeeGrant() {
 				"wrong_grantee",
 				fmt.Sprintf("--%s=json", tmcli.OutputFlag),
 			},
-			"decoding bech32 failed",
+			"invalid address",
 			true, nil, nil,
 		},
 		{

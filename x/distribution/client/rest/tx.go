@@ -204,7 +204,7 @@ func newFundCommunityPoolHandlerFn(clientCtx client.Context) http.HandlerFunc {
 // Auxiliary
 
 func checkDelegatorAddressVar(w http.ResponseWriter, r *http.Request) (sdk.AccAddress, bool) {
-	addr, err := sdk.AccAddressFromBech32(mux.Vars(r)["delegatorAddr"])
+	addr, err := sdk.AccAddressFromString(mux.Vars(r)["delegatorAddr"])
 	if rest.CheckBadRequestError(w, err) {
 		return nil, false
 	}
@@ -213,7 +213,7 @@ func checkDelegatorAddressVar(w http.ResponseWriter, r *http.Request) (sdk.AccAd
 }
 
 func checkValidatorAddressVar(w http.ResponseWriter, r *http.Request) (sdk.ValAddress, bool) {
-	addr, err := sdk.ValAddressFromBech32(mux.Vars(r)["validatorAddr"])
+	addr, err := sdk.ValAddressFromString(mux.Vars(r)["validatorAddr"])
 	if rest.CheckBadRequestError(w, err) {
 		return nil, false
 	}

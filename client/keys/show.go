@@ -163,7 +163,7 @@ func fetchKey(kb keyring.Keyring, keyref string) (keyring.Info, error) {
 	if err == nil || !sdkerr.IsOf(err, sdkerr.ErrIO, sdkerr.ErrKeyNotFound) {
 		return info, err
 	}
-	accAddr, err := sdk.AccAddressFromBech32(keyref)
+	accAddr, err := sdk.AccAddressFromString(keyref)
 	if err != nil {
 		return info, err
 	}

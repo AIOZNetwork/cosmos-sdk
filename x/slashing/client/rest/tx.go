@@ -27,7 +27,7 @@ type UnjailReq struct {
 func NewUnjailRequestHandlerFn(clientCtx client.Context) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
-		bech32Validator := vars["validatorAddr"]
+		strValidator := vars["validatorAddr"]
 
 		var req UnjailReq
 		if !rest.ReadRESTReq(w, r, clientCtx.LegacyAmino, &req) {
@@ -44,7 +44,7 @@ func NewUnjailRequestHandlerFn(clientCtx client.Context) http.HandlerFunc {
 			return
 		}
 
-		valAddr, err := sdk.ValAddressFromBech32(bech32Validator)
+		valAddr, err := sdk.ValAddressFromString(strValidator)
 		if rest.CheckInternalServerError(w, err) {
 			return
 		}

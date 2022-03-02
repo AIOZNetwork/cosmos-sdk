@@ -1,3 +1,4 @@
+//go:build norace
 // +build norace
 
 package rest_test
@@ -84,7 +85,7 @@ func (s *IntegrationTestSuite) TestLegacyGetVote() {
 		{
 			"get proposal with wrong voter address",
 			fmt.Sprintf("%s/gov/proposals/%s/votes/%s", val.APIAddress, "1", "wrongVoterAddress"),
-			true, "decoding bech32 failed: string not all lowercase or all uppercase",
+			true, "invalid address: must provide bech32 or hex address",
 		},
 		{
 			"get proposal with id",

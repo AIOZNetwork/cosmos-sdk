@@ -39,15 +39,15 @@ func queryTxs(clientCtx client.Context, action string, delegatorAddr string) (*s
 func queryBonds(clientCtx client.Context, endpoint string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
-		bech32delegator := vars["delegatorAddr"]
-		bech32validator := vars["validatorAddr"]
+		strDelegator := vars["delegatorAddr"]
+		strValidator := vars["validatorAddr"]
 
-		delegatorAddr, err := sdk.AccAddressFromBech32(bech32delegator)
+		delegatorAddr, err := sdk.AccAddressFromString(strDelegator)
 		if rest.CheckBadRequestError(w, err) {
 			return
 		}
 
-		validatorAddr, err := sdk.ValAddressFromBech32(bech32validator)
+		validatorAddr, err := sdk.ValAddressFromString(strValidator)
 		if rest.CheckBadRequestError(w, err) {
 			return
 		}
@@ -77,9 +77,9 @@ func queryBonds(clientCtx client.Context, endpoint string) http.HandlerFunc {
 func queryDelegator(clientCtx client.Context, endpoint string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
-		bech32delegator := vars["delegatorAddr"]
+		strDelegator := vars["delegatorAddr"]
 
-		delegatorAddr, err := sdk.AccAddressFromBech32(bech32delegator)
+		delegatorAddr, err := sdk.AccAddressFromString(strDelegator)
 		if rest.CheckBadRequestError(w, err) {
 			return
 		}
@@ -109,14 +109,14 @@ func queryDelegator(clientCtx client.Context, endpoint string) http.HandlerFunc 
 func queryValidator(clientCtx client.Context, endpoint string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
-		bech32validatorAddr := vars["validatorAddr"]
+		strValidatorAddr := vars["validatorAddr"]
 
 		_, page, limit, err := rest.ParseHTTPArgsWithLimit(r, 0)
 		if rest.CheckBadRequestError(w, err) {
 			return
 		}
 
-		validatorAddr, err := sdk.ValAddressFromBech32(bech32validatorAddr)
+		validatorAddr, err := sdk.ValAddressFromString(strValidatorAddr)
 		if rest.CheckBadRequestError(w, err) {
 			return
 		}

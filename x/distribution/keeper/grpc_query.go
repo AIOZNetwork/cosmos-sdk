@@ -37,7 +37,7 @@ func (k Keeper) ValidatorOutstandingRewards(c context.Context, req *types.QueryV
 
 	ctx := sdk.UnwrapSDKContext(c)
 
-	valAdr, err := sdk.ValAddressFromBech32(req.ValidatorAddress)
+	valAdr, err := sdk.ValAddressFromString(req.ValidatorAddress)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func (k Keeper) ValidatorCommission(c context.Context, req *types.QueryValidator
 
 	ctx := sdk.UnwrapSDKContext(c)
 
-	valAdr, err := sdk.ValAddressFromBech32(req.ValidatorAddress)
+	valAdr, err := sdk.ValAddressFromString(req.ValidatorAddress)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (k Keeper) ValidatorSlashes(c context.Context, req *types.QueryValidatorSla
 	ctx := sdk.UnwrapSDKContext(c)
 	events := make([]types.ValidatorSlashEvent, 0)
 	store := ctx.KVStore(k.storeKey)
-	valAddr, err := sdk.ValAddressFromBech32(req.ValidatorAddress)
+	valAddr, err := sdk.ValAddressFromString(req.ValidatorAddress)
 	if err != nil {
 		return nil, status.Errorf(codes.InvalidArgument, "invalid validator address")
 	}
@@ -131,7 +131,7 @@ func (k Keeper) DelegationRewards(c context.Context, req *types.QueryDelegationR
 
 	ctx := sdk.UnwrapSDKContext(c)
 
-	valAdr, err := sdk.ValAddressFromBech32(req.ValidatorAddress)
+	valAdr, err := sdk.ValAddressFromString(req.ValidatorAddress)
 	if err != nil {
 		return nil, err
 	}
@@ -141,7 +141,7 @@ func (k Keeper) DelegationRewards(c context.Context, req *types.QueryDelegationR
 		return nil, sdkerrors.Wrap(types.ErrNoValidatorExists, req.ValidatorAddress)
 	}
 
-	delAdr, err := sdk.AccAddressFromBech32(req.DelegatorAddress)
+	delAdr, err := sdk.AccAddressFromString(req.DelegatorAddress)
 	if err != nil {
 		return nil, err
 	}
@@ -171,7 +171,7 @@ func (k Keeper) DelegationTotalRewards(c context.Context, req *types.QueryDelega
 	total := sdk.DecCoins{}
 	var delRewards []types.DelegationDelegatorReward
 
-	delAdr, err := sdk.AccAddressFromBech32(req.DelegatorAddress)
+	delAdr, err := sdk.AccAddressFromString(req.DelegatorAddress)
 	if err != nil {
 		return nil, err
 	}
@@ -204,7 +204,7 @@ func (k Keeper) DelegatorValidators(c context.Context, req *types.QueryDelegator
 	}
 
 	ctx := sdk.UnwrapSDKContext(c)
-	delAdr, err := sdk.AccAddressFromBech32(req.DelegatorAddress)
+	delAdr, err := sdk.AccAddressFromString(req.DelegatorAddress)
 	if err != nil {
 		return nil, err
 	}
@@ -230,7 +230,7 @@ func (k Keeper) DelegatorWithdrawAddress(c context.Context, req *types.QueryDele
 	if req.DelegatorAddress == "" {
 		return nil, status.Error(codes.InvalidArgument, "empty delegator address")
 	}
-	delAdr, err := sdk.AccAddressFromBech32(req.DelegatorAddress)
+	delAdr, err := sdk.AccAddressFromString(req.DelegatorAddress)
 	if err != nil {
 		return nil, err
 	}
